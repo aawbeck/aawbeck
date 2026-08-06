@@ -2,7 +2,7 @@
 
 Product leader, 18+ years turning underperforming enterprise SaaS platforms into market leaders. $100M+ in portfolio revenue growth across CrowdStrike, PwC, and Tripwire.
 
-Now running an AI-native product practice as an independent consultant: Claude Code, Cursor, and agentic tooling for PRDs, competitive analysis, and roadmap work.
+Now running an AI-native product practice as an independent consultant: Claude Code with agentic tooling for PRDs, competitive analysis, and roadmap work.
 
 **Background:** Director/VP-level product management in cybersecurity and enterprise SaaS — EDR/XDR, threat intelligence, vulnerability management.
 - PwC: built the enterprise visibility product org from zero, $7M SaaS ARR in 24 months
