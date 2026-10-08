@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phoenix Metro Climate 2016-2025</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#fff;--fg:#1d2330;--mut:#667;--card:#f4f5f8;--line:#d9dce4}
+@media(prefers-color-scheme:dark){:root{--bg:#14171f;--fg:#e8eaf0;--mut:#9aa2b4;--card:#1d212c;--line:#2d3342}}
+body{font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg);margin:0;padding:16px;max-width:1100px;margin:auto}
+h1{font-size:22px}h2{font-size:17px;margin-top:28px}.mut{color:var(--mut);font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}th{cursor:pointer;position:sticky;top:0;background:var(--bg)}
+.wrap{overflow-x:auto}.card{background:var(--card);border-radius:10px;padding:12px;margin:10px 0}
+select{font:inherit;padding:4px}canvas{max-height:320px}.px{color:var(--mut)}
+</style></head><body>
+<h1>Phoenix Metro climate, 2016-2025</h1>
+<p class="mut">NOAA GHCN-Daily: NWS/co-op temperature stations and CoCoRaHS + co-op rain gauges, averaged per area. Click a column to sort. <span class="px">*</span> = temperature from a nearby proxy station or fewer than 10 usable years (see notes).</p>
+<div class="wrap"><table id="t"></table></div>
+<h2>Compare areas by year</h2>
+<div class="card"><select id="metric"></select>
+<canvas id="yr"></canvas></div>
+<h2>Month-by-month profile</h2>
+<div class="card">Area A <select id="a1"></select> Area B <select id="a2"></select><canvas id="mo"></canvas></div>
+<h2>Notes</h2>
+<p class="mut">Threshold-day counts are scaled up for missing days; years with under ~77% of days observed are excluded. Rain = average over qualifying gauges (330+ reporting days/year). Maricopa County Flood Control gauge data not yet included. Elevation matters as much as latitude here: higher areas (North Scottsdale, Carefree, Fountain Hills) run several degrees cooler.</p>
+<script>
+const D=/*DATA*/null;
+const cols=[["avg_high","Avg high °F"],["avg_low","Avg low °F"],["days_100","Days ≥100°F"],["days_110","Days ≥110°F"],["nights_90","Nights ≥90°F"],["freeze_days","Freeze days"],["rain_in","Rain in/yr"],["monsoon_in","Monsoon in"],["winter_in","Winter in"],["rain_days","Rain days"]];
+let sortK="avg_high",asc=true;
+function table(){const t=document.getElementById("t");const rows=[...D.summary].sort((x,y)=>((x[sortK]===""?1e9:x[sortK])-(y[sortK]===""?1e9:y[sortK]))*(asc?1:-1));
+t.innerHTML="<tr><th data-k='area'>Area</th>"+cols.map(c=>`<th data-k='${c[0]}'>${c[1]}</th>`).join("")+"<th>Temp yrs</th></tr>"+
+rows.map(r=>`<tr><td title="${r.temp_note||""}">${r.area}${(r.temp_note||r.temp_years<10)?"<span class=px>*</span>":""}</td>`+cols.map(c=>`<td>${r[c[0]]===""?"–":Number(r[c[0]]).toFixed(1)}</td>`).join("")+`<td>${r.temp_years}</td></tr>`).join("");
+t.querySelectorAll("th").forEach(h=>h.onclick=()=>{const k=h.dataset.k;if(!cols.some(c=>c[0]==k))return;asc=sortK==k?!asc:true;sortK=k;table()})}
+table();
+const areas=D.summary.map(r=>r.area),pal=["#1f77b4","#d62728","#2ca02c","#ff7f0e","#9467bd","#8c564b","#e377c2","#17becf","#7f7f7f","#bcbd22","#393b79","#ad494a","#637939"];
+const mset=document.getElementById("metric");cols.forEach(c=>mset.add(new Option(c[1],c[0])));mset.value="days_110";
+let c1,c2;function yr(){const k=mset.value,yrs=[...Array(10)].map((_,i)=>2016+i);c1&&c1.destroy();
+c1=new Chart("yr",{type:"line",data:{labels:yrs,datasets:areas.map((a,i)=>({label:a,borderColor:pal[i],backgroundColor:pal[i],tension:.2,pointRadius:2,
+data:yrs.map(y=>{const r=D.annual.find(r=>r.area==a&&r.year==y);return r&&r[k]!=null?r[k]:null})}))},options:{plugins:{legend:{position:"bottom"}}}})}
+mset.onchange=yr;yr();
+const s1=document.getElementById("a1"),s2=document.getElementById("a2");areas.forEach(a=>{s1.add(new Option(a,a));s2.add(new Option(a,a))});s1.value="Central Phoenix";s2.value="North Scottsdale";
+const mn="Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" ");
+function mo(){c2&&c2.destroy();const ds=[];[[s1.value,pal[0]],[s2.value,pal[1]]].forEach(([a,col],i)=>{const r=D.monthly.filter(x=>x.area==a);
+ds.push({label:a+" high",borderColor:col,data:r.map(x=>x.avg_high),yAxisID:"y"},{label:a+" low",borderColor:col,borderDash:[5,4],data:r.map(x=>x.avg_low),yAxisID:"y"},{type:"bar",label:a+" rain (in)",backgroundColor:col+"66",data:r.map(x=>x.rain_in),yAxisID:"y1"})});
+c2=new Chart("mo",{type:"line",data:{labels:mn,datasets:ds},options:{scales:{y:{title:{display:true,text:"°F"}},y1:{position:"right",grid:{drawOnChartArea:false},title:{display:true,text:"rain in"}}},plugins:{legend:{position:"bottom"}}}})}
+s1.onchange=s2.onchange=mo;mo();
+</script></body></html>
