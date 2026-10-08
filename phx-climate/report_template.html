@@ -22,7 +22,7 @@ select{font:inherit;padding:4px}canvas{max-height:320px}.px{color:var(--mut)}
 <h2>Month-by-month profile</h2>
 <div class="card">Area A <select id="a1"></select> Area B <select id="a2"></select><canvas id="mo"></canvas></div>
 <h2>Notes</h2>
-<p class="mut">Threshold-day counts are scaled up for missing days; years with under ~77% of days observed are excluded. Rain = average of the nearest FCDMC gauges (Chandler has 2, Gilbert 4, most others 4-6); calendar years. The volunteer (CoCoRaHS/co-op) gauges read 6-30% wetter than the county gauges in most areas, so treat rain as a range. Elevation matters as much as latitude here: higher areas (North Scottsdale, Carefree, Fountain Hills) run several degrees cooler.</p>
+<p class="mut">Airport-based temperatures (marked *) are daily extremes from the Iowa Environmental Mesonet; they match official records closely (within ~0.5F on average) but 110F+ day counts run roughly 10-15% low. Threshold-day counts are scaled up for missing days; years with under ~77% of days observed are excluded. Rain = average of the nearest FCDMC gauges (Chandler has 2, Gilbert 4, most others 4-6); calendar years. The volunteer (CoCoRaHS/co-op) gauges read 6-30% wetter than the county gauges in most areas, so treat rain as a range. Elevation matters as much as latitude here: higher areas (North Scottsdale, Carefree, Fountain Hills) run several degrees cooler.</p>
 <script>
 const D=/*DATA*/null;
 const cols=[["avg_high","Avg high °F"],["avg_low","Avg low °F"],["days_100","Days ≥100°F"],["days_110","Days ≥110°F"],["nights_90","Nights ≥90°F"],["freeze_days","Freeze days"],["rain_in","Rain in/yr"],["monsoon_in","Monsoon in"],["winter_in","Winter in"],["rain_days","Rain days"],["volunteer_rain_in","Rain in/yr (volunteer gauges)"]];

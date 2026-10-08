@@ -1,7 +1,9 @@
 import pandas as pd, numpy as np
 from stations import AREAS, TEMP_PROXY
 d = pd.read_csv("data/noaa_daily.csv", parse_dates=["DATE"])
-ap = pd.read_csv("data/airport_daily.csv", parse_dates=["DATE"])[["STATION","DATE","TMAX","TMIN"]]
+iem = pd.read_csv("data/iem_daily.csv", parse_dates=["DATE"])          # Iowa Mesonet daily highs/lows from airport obs
+IEM_ID = {"CHD":"CHD_AP","IWA":"IWA_AP","GYR":"GYR_AP","BXK":"BXK_AP","GEU":"GEU_AP"}
+ap = iem[iem.IEM.isin(IEM_ID)].assign(STATION=lambda x: x.IEM.map(IEM_ID))[["STATION","DATE","TMAX","TMIN"]].copy()
 ap["PRCP"] = np.nan
 d = pd.concat([d, ap], ignore_index=True)
 d["Y"], d["M"] = d.DATE.dt.year, d.DATE.dt.month

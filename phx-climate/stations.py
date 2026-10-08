@@ -11,7 +11,7 @@ AREAS = {
  "Chandler": ("CHD_AP", ["US1AZMR0197","US1AZMR0278","US1AZMR0290","US1AZMR0458","US1AZMR0157"]),
  "Fountain Hills":   ("USC00023190", ["USC00023190","US1AZMR0022","US1AZMR0319"]),
  "Carefree/Cave Creek": ("USC00021282", ["USC00021282","US1AZMR0017","US1AZMR0163"]),
- "West Valley (Glendale/Peoria)": ("USC00029634", ["US1AZMR0046","US1AZMR0226","US1AZMR0379","USC00029634"]),
+ "West Valley (Glendale/Peoria)": ("GEU_AP", ["US1AZMR0046","US1AZMR0226","US1AZMR0379","USC00029634"]),
  "Surprise/Sun City": ("USC00029634", ["US1AZMR0042","US1AZMR0026","US1AZMR0103","US1AZMR0287"]),
  "Ahwatukee":        (["USW00023183","CHD_AP"], ["US1AZMR0382"]),
  "Queen Creek":      ("IWA_AP", []),
@@ -24,9 +24,17 @@ AREAS = {
 }
 
 # Notes shown in outputs where the temperature source is not an in-area, full-record station.
+# Airport temperatures are daily highs/lows from the Iowa Mesonet (close to official records; 110F+ day counts run ~10-15% low).
 TEMP_PROXY = {
- "Gilbert": "Average of Chandler Municipal and Williams Gateway airports (Gilbert sits between), from hourly obs: 110F+ day counts run low",
- "Chandler": "Chandler Municipal Airport, from hourly obs: lows run ~1F warm, 110F+ day counts run low",
- "West Valley (Glendale/Peoria)": "Youngtown station (Sun City area)",
- "Surprise/Sun City": "Youngtown station",
+ "Gilbert": "Average of Chandler Municipal and Williams Gateway airports (Gilbert sits between them)",
+ "Chandler": "Chandler Municipal Airport",
+ "West Valley (Glendale/Peoria)": "Glendale Municipal Airport",
+ "Surprise/Sun City": "Youngtown station (Sun City area)",
+ "Ahwatukee": "Average of Sky Harbor and Chandler Municipal airports; foothills may run a bit cooler at night",
+ "Queen Creek": "Williams Gateway Airport (~4 mi); same source as San Tan Valley",
+ "San Tan Valley": "Williams Gateway Airport (~8 mi); same source as Queen Creek",
+ "Goodyear": "Phoenix Goodyear Airport; same source as Avondale/Litchfield Park",
+ "Avondale/Litchfield Park": "Phoenix Goodyear Airport (~5 mi); same source as Goodyear",
+ "Buckeye": "Buckeye Municipal Airport",
+ "Anthem/New River": "Deer Valley Airport (~12 mi, similar elevation); same source as North Phoenix",
 }
