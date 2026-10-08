@@ -12,10 +12,11 @@ aside{width:270px;overflow:auto;padding:10px 12px;border-left:1px solid var(--li
 .row{display:flex;gap:8px;align-items:center;padding:4px 2px;cursor:pointer;border-radius:6px}.row:hover,.row.on{background:rgba(128,128,128,.18)}
 .sw{width:16px;height:16px;border-radius:4px;flex:none}.nm{flex:1}.v{font-size:11px;color:var(--mut);text-align:right;line-height:1.2}
 .cl{font:600 11px system-ui;color:#222;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff;white-space:nowrap}
+.sh{display:inline-block;transform:translate(-50%,-50%);background:#2b2f3a;color:#fff;font:700 10px system-ui;padding:1px 6px;border-radius:9px;border:1.5px solid #fff;white-space:nowrap}.sh.minor{background:#5b6170;font-weight:600}
 .tip b{font-size:13px}@media(max-width:700px){main{flex-direction:column}aside{width:auto;border-left:0;border-top:1px solid var(--line);max-height:40%}}
 </style></head><body>
 <header><h1>Phoenix Metro: which part of the Valley each report area represents</h1>
-<div class="mut">Each area from report.html is shaded in its report color (10-year averages, 2016-2025): single-city areas follow the city limits, the rest use the nearest area center within ~9 miles. Unshaded land is not represented. Hover or tap for numbers; click a legend row to highlight. Boundaries: Maricopa County GIS.</div></header>
+<div class="mut">Each area from report.html is shaded in its report color (10-year averages, 2016-2025): single-city areas follow the city limits, the rest use the nearest area center within ~9 miles. Unshaded land is not represented. Hover or tap for numbers; click a legend row to highlight. Freeways and boundaries: Maricopa County GIS.</div></header>
 <main><div id="map"></div><aside id="lg"></aside></main>
 <script>
 const D=/*DATA*/null;
@@ -28,6 +29,12 @@ L.geoJSON(D.regions,{style:x=>({fillColor:x.properties.color,fillOpacity:.5,colo
  onEachFeature:(ft,l)=>{(layers[ft.properties.area]=layers[ft.properties.area]||[]).push(l);l.bindTooltip(tip(ft.properties),{sticky:true});
   l.on("mouseover",()=>hi(ft.properties.area,true));l.on("mouseout",()=>hi(ft.properties.area,false))}}).addTo(map);
 L.geoJSON(D.outlines,{style:{fill:false,color:"#333",weight:.8,opacity:.4},interactive:false}).addTo(map);
+const roadsG=L.layerGroup();
+L.geoJSON(D.roads,{style:x=>({color:"#fff",weight:x.properties.cls=="major"?6:4,opacity:.9}),interactive:false}).addTo(roadsG);
+L.geoJSON(D.roads,{style:x=>({color:x.properties.cls=="major"?"#2b2f3a":"#5b6170",weight:x.properties.cls=="major"?3:2,opacity:1}),
+  onEachFeature:(ft,l)=>l.bindTooltip(ft.properties.route,{sticky:true})}).addTo(roadsG);
+D.shields.forEach(s=>L.marker([s.lat,s.lon],{icon:L.divIcon({className:"",html:`<span class="sh ${s.cls}">${s.label}</span>`,iconSize:[0,0]}),interactive:false}).addTo(roadsG));
+roadsG.addTo(map);L.control.layers(null,{"Freeways":roadsG},{collapsed:false,position:"topright"}).addTo(map);
 D.labels.forEach(l=>L.marker([l.lat,l.lon],{icon:L.divIcon({className:"",html:`<span class="cl">${l.name}</span>`,iconSize:[0,0]}),interactive:false}).addTo(map));
 D.centers.forEach(c=>L.circleMarker([c.lat,c.lon],{radius:5,color:"#fff",weight:2,fillColor:c.color,fillOpacity:1}).bindTooltip(c.area+" (area center)").addTo(map));
 function hi(a,on){(layers[a]||[]).forEach(l=>l.setStyle({weight:on?2.5:0,fillOpacity:on?.7:.5,color:"#111"}));document.querySelectorAll(".row").forEach(r=>r.classList.toggle("on",on&&r.dataset.a===a))}

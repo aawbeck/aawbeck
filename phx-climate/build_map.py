@@ -60,5 +60,31 @@ legend = [dict(area=a, color=col[a], **{k: stats[a][k] for k in ("avg_high","day
 centers = [dict(area=a, lat=CENTERS[a][0], lon=CENTERS[a][1], color=col[a]) for a in areas]
 data = dict(regions=dict(type="FeatureCollection", features=features), outlines=dict(type="FeatureCollection", features=outl),
             labels=labels, legend=legend, centers=centers)
+
+# ---- freeways (Maricopa County GIS Highway layer; ramps and interchange pieces left out)
+from shapely.ops import linemerge
+ROUTES = {  # (HighwayName) -> (label, class)
+ "I 10":("I-10","major"),"I 17":("I-17","major"),"SR 101":("Loop 101","major"),"SR 202":("Loop 202","major"),"SR 303":("Loop 303","major"),
+ "SR 51":("SR 51","major"),"US 60":("US 60","major"),"SR 143":("SR 143","major"),"SR 87":("SR 87","major"),
+ "SR 85":("SR 85","minor"),"SR 74":("SR 74","minor")}
+hw = json.load(open("data/highways.geojson"))["features"]
+lines = {}
+for f in hw:
+    p = f["properties"]; r = ROUTES.get(p["HighwayName"])
+    if not r or p["HighwayType"] in ("Ramp", "Interchange"): continue
+    lines.setdefault(r, []).append(shape(f["geometry"]))
+VIEW = box(-112.65, 33.10, -111.35, 34.00)
+roads, shields = [], []
+for (label, cls), gs in lines.items():
+    g = unary_union(gs).intersection(VIEW)
+    if g.is_empty: continue
+    g = linemerge(g) if g.geom_type == "MultiLineString" else g
+    roads.append(dict(type="Feature", properties=dict(route=label, cls=cls), geometry=mapping(g.simplify(0.0003))))
+    parts = sorted((g.geoms if hasattr(g, "geoms") else [g]), key=lambda x: -x.length)[:2]
+    for part in parts:
+        for frac in ((0.3, 0.75) if part is parts[0] else (0.5,)):
+            pt = part.interpolate(frac, normalized=True); 
+            if -112.56 < pt.x < -111.44 and 33.18 < pt.y < 33.92: shields.append(dict(label=label, cls=cls, lat=pt.y, lon=pt.x))
+data["roads"] = dict(type="FeatureCollection", features=roads); data["shields"] = shields
 html = open("map_template.html").read().replace("/*DATA*/null", json.dumps(data))
 open("map.html", "w").write(html); print("regions", len(features), "outlines", len(outl), "bytes", len(html))
