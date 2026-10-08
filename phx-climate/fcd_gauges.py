@@ -4,7 +4,8 @@ CENTERS = {"Central Phoenix":(33.45,-112.07),"North Phoenix":(33.66,-112.07),"Sc
  "North Scottsdale":(33.70,-111.88),"Tempe":(33.41,-111.93),"Mesa (East)":(33.42,-111.70),"Gilbert":(33.35,-111.79),
  "Chandler":(33.30,-111.84),"Fountain Hills":(33.61,-111.72),"Carefree/Cave Creek":(33.82,-111.95),
  "West Valley (Glendale/Peoria)":(33.58,-112.24),"Surprise/Sun City":(33.63,-112.35),
- "Goodyear/Litchfield":(33.45,-112.38),"Apache Junction":(33.41,-111.55)}
+ "Goodyear":(33.42,-112.38),"Avondale/Litchfield Park":(33.46,-112.33),"Buckeye":(33.37,-112.58),
+ "Ahwatukee":(33.31,-112.00),"Queen Creek":(33.25,-111.63),"San Tan Valley":(33.19,-111.55),"Anthem/New River":(33.86,-112.13),"Apache Junction":(33.41,-111.55)}
 def km(a,b):
     return 6371*math.hypot(math.radians(b[0]-a[0]), math.radians(b[1]-a[1])*math.cos(math.radians(a[0])))
 def pick(meta="/tmp/fcd/meta/sensors.xlsx", radius_km=8, n=6):

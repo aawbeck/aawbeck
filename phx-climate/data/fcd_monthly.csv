@@ -143,18 +143,90 @@ Surprise/Sun City,9,0.44
 Surprise/Sun City,10,0.628
 Surprise/Sun City,11,0.59
 Surprise/Sun City,12,0.704
-Goodyear/Litchfield,1,0.561
-Goodyear/Litchfield,2,0.52
-Goodyear/Litchfield,3,0.584
-Goodyear/Litchfield,4,0.103
-Goodyear/Litchfield,5,0.08
-Goodyear/Litchfield,6,0.09
-Goodyear/Litchfield,7,0.775
-Goodyear/Litchfield,8,0.697
-Goodyear/Litchfield,9,0.418
-Goodyear/Litchfield,10,0.641
-Goodyear/Litchfield,11,0.558
-Goodyear/Litchfield,12,0.647
+Goodyear,1,0.51
+Goodyear,2,0.466
+Goodyear,3,0.522
+Goodyear,4,0.077
+Goodyear,5,0.076
+Goodyear,6,0.041
+Goodyear,7,0.668
+Goodyear,8,0.665
+Goodyear,9,0.374
+Goodyear,10,0.776
+Goodyear,11,0.522
+Goodyear,12,0.635
+Avondale/Litchfield Park,1,0.59
+Avondale/Litchfield Park,2,0.597
+Avondale/Litchfield Park,3,0.626
+Avondale/Litchfield Park,4,0.133
+Avondale/Litchfield Park,5,0.093
+Avondale/Litchfield Park,6,0.076
+Avondale/Litchfield Park,7,0.815
+Avondale/Litchfield Park,8,0.741
+Avondale/Litchfield Park,9,0.481
+Avondale/Litchfield Park,10,0.625
+Avondale/Litchfield Park,11,0.673
+Avondale/Litchfield Park,12,0.715
+Buckeye,1,0.514
+Buckeye,2,0.518
+Buckeye,3,0.626
+Buckeye,4,0.065
+Buckeye,5,0.053
+Buckeye,6,0.081
+Buckeye,7,0.886
+Buckeye,8,0.447
+Buckeye,9,0.653
+Buckeye,10,0.642
+Buckeye,11,0.4
+Buckeye,12,0.547
+Ahwatukee,1,0.534
+Ahwatukee,2,0.681
+Ahwatukee,3,0.547
+Ahwatukee,4,0.072
+Ahwatukee,5,0.016
+Ahwatukee,6,0.124
+Ahwatukee,7,0.629
+Ahwatukee,8,0.847
+Ahwatukee,9,0.467
+Ahwatukee,10,1.028
+Ahwatukee,11,0.439
+Ahwatukee,12,0.724
+Queen Creek,1,0.758
+Queen Creek,2,0.831
+Queen Creek,3,0.643
+Queen Creek,4,0.084
+Queen Creek,5,0.022
+Queen Creek,6,0.107
+Queen Creek,7,1.084
+Queen Creek,8,1.15
+Queen Creek,9,0.527
+Queen Creek,10,0.562
+Queen Creek,11,0.543
+Queen Creek,12,0.859
+San Tan Valley,1,0.852
+San Tan Valley,2,0.876
+San Tan Valley,3,0.649
+San Tan Valley,4,0.09
+San Tan Valley,5,0.037
+San Tan Valley,6,0.138
+San Tan Valley,7,0.915
+San Tan Valley,8,1.202
+San Tan Valley,9,0.702
+San Tan Valley,10,0.486
+San Tan Valley,11,0.582
+San Tan Valley,12,0.946
+Anthem/New River,1,0.997
+Anthem/New River,2,1.065
+Anthem/New River,3,0.899
+Anthem/New River,4,0.179
+Anthem/New River,5,0.053
+Anthem/New River,6,0.155
+Anthem/New River,7,0.934
+Anthem/New River,8,1.162
+Anthem/New River,9,0.699
+Anthem/New River,10,0.739
+Anthem/New River,11,0.83
+Anthem/New River,12,0.97
 Apache Junction,1,0.916
 Apache Junction,2,1.148
 Apache Junction,3,0.738

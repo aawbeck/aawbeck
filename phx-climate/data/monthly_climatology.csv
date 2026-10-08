@@ -1,4 +1,28 @@
 area,month,avg_high,avg_low,rain_in
+Ahwatukee,1,66.76,43.88,0.77
+Ahwatukee,2,71.31,47.27,0.78
+Ahwatukee,3,77.22,52.81,0.82
+Ahwatukee,4,87.26,60.35,0.0
+Ahwatukee,5,94.31,67.87,0.0
+Ahwatukee,6,105.34,78.43,0.01
+Ahwatukee,7,107.44,85.28,0.2
+Ahwatukee,8,105.52,83.74,0.9
+Ahwatukee,9,100.66,77.63,0.08
+Ahwatukee,10,90.19,64.96,0.08
+Ahwatukee,11,78.0,53.49,0.26
+Ahwatukee,12,68.83,46.28,0.08
+Anthem/New River,1,64.76,42.72,0.75
+Anthem/New River,2,69.0,45.48,1.05
+Anthem/New River,3,74.72,50.26,1.17
+Anthem/New River,4,84.72,57.13,0.1
+Anthem/New River,5,91.68,63.84,0.13
+Anthem/New River,6,102.86,74.46,0.37
+Anthem/New River,7,105.74,82.34,0.95
+Anthem/New River,8,103.56,81.02,1.06
+Anthem/New River,9,98.13,75.01,1.0
+Anthem/New River,10,87.75,63.13,0.59
+Anthem/New River,11,75.81,52.12,1.07
+Anthem/New River,12,66.9,44.91,0.91
 Apache Junction,1,65.21,41.93,1.23
 Apache Junction,2,70.59,43.68,1.39
 Apache Junction,3,77.24,46.86,0.87
@@ -11,6 +35,30 @@ Apache Junction,9,99.88,71.65,0.96
 Apache Junction,10,89.28,60.5,0.84
 Apache Junction,11,76.76,50.78,0.8
 Apache Junction,12,67.95,44.18,1.15
+Avondale/Litchfield Park,1,65.62,43.37,0.72
+Avondale/Litchfield Park,2,70.53,46.81,0.76
+Avondale/Litchfield Park,3,76.49,52.59,0.78
+Avondale/Litchfield Park,4,86.61,60.22,0.17
+Avondale/Litchfield Park,5,93.45,67.86,0.12
+Avondale/Litchfield Park,6,104.36,77.92,0.13
+Avondale/Litchfield Park,7,106.86,85.07,1.11
+Avondale/Litchfield Park,8,105.33,83.97,0.89
+Avondale/Litchfield Park,9,99.69,76.64,0.54
+Avondale/Litchfield Park,10,89.36,64.09,0.74
+Avondale/Litchfield Park,11,76.72,52.0,0.67
+Avondale/Litchfield Park,12,66.77,44.77,0.75
+Buckeye,1,64.62,39.63,
+Buckeye,2,69.73,42.27,
+Buckeye,3,75.77,47.83,
+Buckeye,4,85.86,54.58,
+Buckeye,5,92.56,62.19,
+Buckeye,6,103.57,72.83,
+Buckeye,7,106.72,81.14,
+Buckeye,8,104.78,80.84,
+Buckeye,9,98.59,72.44,
+Buckeye,10,88.08,59.09,
+Buckeye,11,75.97,47.26,
+Buckeye,12,66.17,40.92,
 Carefree/Cave Creek,1,63.97,41.41,1.39
 Carefree/Cave Creek,2,68.65,44.06,1.42
 Carefree/Cave Creek,3,74.49,48.43,1.36
@@ -59,30 +107,30 @@ Fountain Hills,9,98.44,74.58,0.81
 Fountain Hills,10,88.06,63.44,0.08
 Fountain Hills,11,76.13,52.9,0.6
 Fountain Hills,12,67.36,46.53,0.66
-Gilbert,1,64.86,40.48,0.56
-Gilbert,2,69.29,43.66,0.7
-Gilbert,3,75.18,48.86,0.95
-Gilbert,4,84.97,56.19,0.13
-Gilbert,5,92.27,63.86,0.02
-Gilbert,6,102.99,74.32,0.1
-Gilbert,7,105.19,81.85,0.81
-Gilbert,8,103.04,80.56,0.74
-Gilbert,9,98.38,73.86,0.48
-Gilbert,10,88.37,61.08,0.99
-Gilbert,11,76.14,49.41,0.4
-Gilbert,12,66.46,42.14,1.05
-Goodyear/Litchfield,1,66.74,43.67,0.72
-Goodyear/Litchfield,2,71.45,46.51,0.71
-Goodyear/Litchfield,3,78.48,51.85,0.73
-Goodyear/Litchfield,4,87.77,59.13,0.17
-Goodyear/Litchfield,5,94.36,65.43,0.15
-Goodyear/Litchfield,6,106.47,75.92,0.11
-Goodyear/Litchfield,7,108.79,82.97,1.08
-Goodyear/Litchfield,8,106.07,81.55,0.95
-Goodyear/Litchfield,9,99.83,74.07,0.52
-Goodyear/Litchfield,10,89.45,62.46,0.81
-Goodyear/Litchfield,11,77.2,52.18,0.73
-Goodyear/Litchfield,12,66.43,43.75,0.72
+Gilbert,1,65.43,41.38,0.56
+Gilbert,2,69.83,44.65,0.7
+Gilbert,3,75.72,49.92,0.95
+Gilbert,4,85.6,57.3,0.13
+Gilbert,5,92.77,64.81,0.02
+Gilbert,6,103.65,75.29,0.1
+Gilbert,7,105.71,82.87,0.81
+Gilbert,8,103.63,81.58,0.74
+Gilbert,9,98.93,74.76,0.48
+Gilbert,10,88.83,61.88,0.99
+Gilbert,11,76.54,50.21,0.4
+Gilbert,12,66.94,43.07,1.05
+Goodyear,1,65.62,43.37,0.71
+Goodyear,2,70.53,46.81,0.67
+Goodyear,3,76.49,52.59,0.65
+Goodyear,4,86.61,60.22,0.19
+Goodyear,5,93.45,67.86,0.21
+Goodyear,6,104.36,77.92,0.11
+Goodyear,7,106.86,85.07,0.77
+Goodyear,8,105.33,83.97,0.77
+Goodyear,9,99.69,76.64,0.4
+Goodyear,10,89.36,64.09,0.93
+Goodyear,11,76.72,52.0,0.88
+Goodyear,12,66.77,44.77,0.51
 Mesa (East),1,67.23,40.7,1.02
 Mesa (East),2,71.87,43.23,1.13
 Mesa (East),3,78.09,47.81,0.87
@@ -119,6 +167,30 @@ North Scottsdale,9,95.67,72.68,0.71
 North Scottsdale,10,85.89,62.69,1.23
 North Scottsdale,11,74.77,53.0,0.84
 North Scottsdale,12,67.21,46.29,1.36
+Queen Creek,1,64.86,40.48,
+Queen Creek,2,69.29,43.66,
+Queen Creek,3,75.18,48.86,
+Queen Creek,4,84.97,56.19,
+Queen Creek,5,92.27,63.86,
+Queen Creek,6,102.99,74.32,
+Queen Creek,7,105.19,81.85,
+Queen Creek,8,103.04,80.56,
+Queen Creek,9,98.38,73.86,
+Queen Creek,10,88.37,61.08,
+Queen Creek,11,76.14,49.41,
+Queen Creek,12,66.46,42.14,
+San Tan Valley,1,64.86,40.48,0.88
+San Tan Valley,2,69.29,43.66,1.28
+San Tan Valley,3,75.18,48.86,0.57
+San Tan Valley,4,84.97,56.19,0.03
+San Tan Valley,5,92.27,63.86,0.04
+San Tan Valley,6,102.99,74.32,0.16
+San Tan Valley,7,105.19,81.85,1.65
+San Tan Valley,8,103.04,80.56,1.35
+San Tan Valley,9,98.38,73.86,0.71
+San Tan Valley,10,88.37,61.08,0.44
+San Tan Valley,11,76.14,49.41,0.75
+San Tan Valley,12,66.46,42.14,0.99
 Scottsdale,1,65.87,42.92,0.84
 Scottsdale,2,70.06,46.16,0.87
 Scottsdale,3,75.77,51.64,0.85

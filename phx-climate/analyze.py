@@ -13,6 +13,7 @@ cov = pr.groupby(["STATION","Y"]).size().rename("n").reset_index()
 good = set(map(tuple, cov[cov.n >= MIN_DAYS][["STATION","Y"]].values))
 rain_rows = []
 for a,(_, gauges) in AREAS.items():
+    if not gauges: continue            # areas with no NOAA volunteer/co-op gauge (county gauges used instead)
     g = pr[pr.STATION.isin(gauges)]
     g = g[[ (s,y) in good for s,y in zip(g.STATION, g.Y)]]
     for y, gy in g.groupby("Y"):
@@ -24,9 +25,15 @@ rain = pd.DataFrame(rain_rows)
 
 # ---- temperature
 t = d.dropna(subset=["TMAX","TMIN"])
+def tdata(ts):
+    """Daily temps for one station id, or the day-by-day mean of several stations."""
+    ids = [ts] if isinstance(ts, str) else list(ts)
+    g = t[t.STATION.isin(ids)].groupby("DATE")[["TMAX","TMIN"]].mean().reset_index()
+    g["Y"], g["M"] = g.DATE.dt.year, g.DATE.dt.month
+    return g
 temp_rows = []
 for a,(ts,_) in AREAS.items():
-    g = t[t.STATION == ts]
+    g = tdata(ts)
     for y, gy in g.groupby("Y"):
         n = len(gy)
         if n < 280: continue  # temp: >=~77% of days observed
@@ -43,13 +50,14 @@ annual.round(2).to_csv("data/annual_by_area.csv", index=False)
 # monthly climatology (2016-2025 means)
 m = []
 for a,(ts,gauges) in AREAS.items():
-    g = t[t.STATION==ts]
+    g = tdata(ts)
     for mo, gm in g.groupby("M"):
         m.append(dict(area=a, month=mo, avg_high=gm.TMAX.mean(), avg_low=gm.TMIN.mean()))
 mt = pd.DataFrame(m)
 pm = pr[[ (s,y) in good for s,y in zip(pr.STATION, pr.Y)]]
 mr = []
 for a,(_, gauges) in AREAS.items():
+    if not gauges: continue
     g = pm[pm.STATION.isin(gauges)]
     tot = g.groupby(["STATION","Y","M"]).PRCP.sum().reset_index()
     ym = tot.groupby(["Y","M"]).PRCP.mean().reset_index()

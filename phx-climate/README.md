@@ -1,6 +1,8 @@
 # Phoenix Metro climate, 2016-2025
 
-Run order: `fetch_noaa.py` -> `fetch_isd.py` -> `fetch_fcd.py` -> `analyze.py` -> `fcd_analyze.py` -> `build_report.py`; open `report.html`.
+Run order: `fetch_noaa.py` -> `fetch_isd.py` -> `fetch_fcd.py` -> `analyze.py` -> `fcd_analyze.py` -> `build_report.py` -> `build_map.py` -> `build_report.py` (again, to embed the map preview); open `report.html` and `map.html`.
+`colors.py` fixes each area's color; `data/cities.geojson` and `data/highways.geojson` come from Maricopa County GIS (gis.maricopa.gov).
+Several areas share or average nearby airport stations for temperature (see the notes column in the report); Ahwatukee and San Tan Valley outlines on the map are approximate.
 (`fetch_fcd.py` needs `/tmp/fcd/meta/sensors.xlsx` from https://alert.fcd.maricopa.gov/alert/Meta/ALERT_sensors_all_by_name.xlsx and the 2025 zip it downloads itself.)
 
 - **Rain (primary)**: Flood Control District of Maricopa County (FCDMC) automated gauges, the 2-6 nearest each area (`fcd_gauges.py`), calendar years 2016-2025. Water years 2016-2024 come from the per-gauge official precipitation workbooks (rows outside each sheet's water year are discarded because some sheets in that archive are stale copies); 2025 on comes from `pcp_WY_2025/2026.xlsx`.

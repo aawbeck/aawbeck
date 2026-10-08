@@ -1,6 +1,6 @@
 # Daily high/low from hourly airport obs (NOAA ISD) for stations with no GHCN-Daily temperature record.
 import csv, io, sys, time, urllib.request, collections, datetime as dt
-ST = {"72274953128":"CHD_AP", "72278623104":"IWA_AP"}   # Chandler Municipal, Williams Gateway
+ST = {"72274953128":"CHD_AP", "72278623104":"IWA_AP", "72278803186":"GYR_AP", "72064400226":"BXK_AP"}   # Chandler Muni, Williams Gateway, Phoenix Goodyear, Buckeye Muni
 url = "https://www.ncei.noaa.gov/access/services/data/v1?dataset=global-hourly&dataTypes=TMP&format=csv&stations=%s&startDate=%d-01-01T00:00:00&endDate=%d-12-31T23:59:59"
 days = collections.defaultdict(list)
 for sid in ST:
@@ -18,4 +18,4 @@ for sid in ST:
 with open("data/airport_daily.csv", "w", newline="") as f:
     w = csv.writer(f); w.writerow(["STATION","DATE","TMAX","TMIN","N_OBS"])
     for (s, d), v in sorted(days.items()):
-        if len(v) >= (12 if s == "CHD_AP" else 18): w.writerow([s, d, round(max(v),1), round(min(v),1), len(v)])
+        if len(v) >= (12 if s in ("CHD_AP", "GYR_AP") else 18): w.writerow([s, d, round(max(v),1), round(min(v),1), len(v)])
