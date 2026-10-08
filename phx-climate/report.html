@@ -30,7 +30,7 @@ t.innerHTML="<tr><th data-k='area'>Area</th>"+cols.map(c=>`<th data-k='${c[0]}'>
 rows.map(r=>`<tr><td title="${r.temp_note||""}">${r.area}${(r.temp_note||r.temp_years<10)?"<span class=px>*</span>":""}</td>`+cols.map(c=>`<td>${r[c[0]]===""?"–":Number(r[c[0]]).toFixed(1)}</td>`).join("")+`<td>${r.temp_years}</td></tr>`).join("");
 t.querySelectorAll("th").forEach(h=>h.onclick=()=>{const k=h.dataset.k;if(!cols.some(c=>c[0]==k))return;asc=sortK==k?!asc:true;sortK=k;table()})}
 table();
-const areas=D.summary.map(r=>r.area),pal=["#1f77b4","#d62728","#2ca02c","#ff7f0e","#9467bd","#8c564b","#e377c2","#17becf","#7f7f7f","#bcbd22","#393b79","#ad494a","#637939"];
+const areas=D.summary.map(r=>r.area),pal=["#1f77b4","#d62728","#2ca02c","#ff7f0e","#9467bd","#8c564b","#e377c2","#17becf","#7f7f7f","#bcbd22","#393b79","#ad494a","#637939","#00a6a6","#e6ab02","#4d4d4d"];
 const mset=document.getElementById("metric");cols.forEach(c=>mset.add(new Option(c[1],c[0])));mset.value="days_110";
 let c1,c2;function yr(){const k=mset.value,yrs=[...Array(10)].map((_,i)=>2016+i);c1&&c1.destroy();
 c1=new Chart("yr",{type:"line",data:{labels:yrs,datasets:areas.map((a,i)=>({label:a,borderColor:pal[i],backgroundColor:pal[i],tension:.2,pointRadius:2,

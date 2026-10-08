@@ -11,4 +11,5 @@ a=a.drop(columns=["gauges","rain_in","monsoon_in","winter_in","rain_days"],error
 m=m.drop(columns=["rain_in"]).merge(fm.rename(columns={"fcd_rain_in":"rain_in"}),on=["area","month"],how="outer")
 s=s.fillna(""); 
 data=dict(summary=s.to_dict("records"),annual=a.astype(object).where(a.notna(),None).to_dict("records"),monthly=m.astype(object).where(m.notna(),None).to_dict("records"))
+json.dump(data,open("data/report_data.json","w"))
 open("report.html","w").write(open("report_template.html").read().replace("/*DATA*/null",json.dumps(data)))

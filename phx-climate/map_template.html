@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phoenix Metro climate map</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{--bg:#fff;--fg:#1d2330;--mut:#667;--card:#f4f5f8;--line:#d9dce4}
+@media(prefers-color-scheme:dark){:root{--bg:#14171f;--fg:#e8eaf0;--mut:#9aa2b4;--card:#1d212c;--line:#2d3342}}
+html,body{height:100%}body{margin:0;font:14px/1.45 system-ui,sans-serif;background:var(--bg);color:var(--fg);display:flex;flex-direction:column}
+header{padding:10px 16px}h1{font-size:18px;margin:0}.mut{color:var(--mut);font-size:12px}
+main{flex:1;display:flex;min-height:0}#map{flex:1;min-height:420px;background:#e9edf2}
+aside{width:270px;overflow:auto;padding:10px 12px;border-left:1px solid var(--line);background:var(--card)}
+.row{display:flex;gap:8px;align-items:center;padding:4px 2px;cursor:pointer;border-radius:6px}.row:hover,.row.on{background:rgba(128,128,128,.18)}
+.sw{width:16px;height:16px;border-radius:4px;flex:none}.nm{flex:1}.v{font-size:11px;color:var(--mut);text-align:right;line-height:1.2}
+.cl{font:600 11px system-ui;color:#222;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff;white-space:nowrap}
+.tip b{font-size:13px}@media(max-width:700px){main{flex-direction:column}aside{width:auto;border-left:0;border-top:1px solid var(--line);max-height:40%}}
+</style></head><body>
+<header><h1>Phoenix Metro: which part of the Valley each report area represents</h1>
+<div class="mut">Each area from report.html is shaded in its report color (10-year averages, 2016-2025): single-city areas follow the city limits, the rest use the nearest area center within ~9 miles. Unshaded land is not represented. Hover or tap for numbers; click a legend row to highlight. Boundaries: Maricopa County GIS.</div></header>
+<main><div id="map"></div><aside id="lg"></aside></main>
+<script>
+const D=/*DATA*/null;
+const map=L.map("map",{zoomSnap:.25}).fitBounds([[33.15,-112.6],[33.95,-111.4]]);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{maxZoom:16,attribution:"&copy; OpenStreetMap, &copy; CARTO"}).addTo(map);
+const f=(v,d=1)=>v===""||v==null?"-":Number(v).toFixed(d);
+const tip=p=>`<div class="tip"><b>${p.area}</b><br>Avg high ${f(p.avg_high)}&deg;F / low ${f(p.avg_low)}&deg;F<br>Days &ge;100&deg;F: ${f(p.days_100,0)} &middot; &ge;110&deg;F: ${f(p.days_110,0)}<br>Rain ${f(p.rain)} in/yr (monsoon ${f(p.monsoon)})${p.note?`<br><i>Temp source: ${p.note}</i>`:""}</div>`;
+const layers={};
+L.geoJSON(D.regions,{style:x=>({fillColor:x.properties.color,fillOpacity:.5,color:x.properties.color,weight:0,opacity:1}),
+ onEachFeature:(ft,l)=>{(layers[ft.properties.area]=layers[ft.properties.area]||[]).push(l);l.bindTooltip(tip(ft.properties),{sticky:true});
+  l.on("mouseover",()=>hi(ft.properties.area,true));l.on("mouseout",()=>hi(ft.properties.area,false))}}).addTo(map);
+L.geoJSON(D.outlines,{style:{fill:false,color:"#333",weight:.8,opacity:.4},interactive:false}).addTo(map);
+D.labels.forEach(l=>L.marker([l.lat,l.lon],{icon:L.divIcon({className:"",html:`<span class="cl">${l.name}</span>`,iconSize:[0,0]}),interactive:false}).addTo(map));
+D.centers.forEach(c=>L.circleMarker([c.lat,c.lon],{radius:5,color:"#fff",weight:2,fillColor:c.color,fillOpacity:1}).bindTooltip(c.area+" (area center)").addTo(map));
+function hi(a,on){(layers[a]||[]).forEach(l=>l.setStyle({weight:on?2.5:0,fillOpacity:on?.7:.5,color:"#111"}));document.querySelectorAll(".row").forEach(r=>r.classList.toggle("on",on&&r.dataset.a===a))}
+document.getElementById("lg").innerHTML=D.legend.map(x=>`<div class="row" data-a="${x.area}"><span class="sw" style="background:${x.color}"></span><span class="nm">${x.area}</span><span class="v">${f(x.avg_high,0)}&deg;F high<br>${f(x.rain)} in rain</span></div>`).join("");
+document.querySelectorAll(".row").forEach(r=>{r.onmouseenter=()=>hi(r.dataset.a,true);r.onmouseleave=()=>hi(r.dataset.a,false);
+ r.onclick=()=>{const b=L.featureGroup(layers[r.dataset.a]).getBounds();map.fitBounds(b.pad(.3))}});
+</script></body></html>
