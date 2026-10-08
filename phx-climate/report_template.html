@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phoenix Metro Climate 2016-2025</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#fff;--fg:#1d2330;--mut:#667;--card:#f4f5f8;--line:#d9dce4}
+@media(prefers-color-scheme:dark){:root{--bg:#14171f;--fg:#e8eaf0;--mut:#9aa2b4;--card:#1d212c;--line:#2d3342}}
+body{font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg);margin:0;padding:16px;max-width:1100px;margin:auto}
+h1{font-size:22px}h2{font-size:17px;margin-top:28px}.mut{color:var(--mut);font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}th{cursor:pointer;position:sticky;top:0;background:var(--bg)}
+.dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}figure{margin:12px 0}figure img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff}figcaption{font-size:12px;color:var(--mut);margin-top:4px}.wrap{overflow-x:auto}.card{background:var(--card);border-radius:10px;padding:12px;margin:10px 0}
+select{font:inherit;padding:4px}canvas{max-height:320px}.px{color:var(--mut)}
+</style></head><body>
+<h1>Phoenix Metro climate, 2016-2025</h1>
+<p class="mut">Temperatures: NOAA stations. Rain: Flood Control District of Maricopa County automated gauges (4-6 nearest to each area, averaged); NOAA volunteer-gauge rain shown for comparison. Alphabetical by default; click any column header to sort by it. <span class="px">*</span> = temperature from a nearby proxy station or fewer than 10 usable years (see notes).</p>
+<figure><img alt="Map of the Phoenix Valley with each report area shaded in its color, with freeways" src="data:image/png;base64,/*MAPIMG*/">
+<figcaption>Which part of the Valley each area below represents (same colors as the swatches and charts). Single-city areas follow city limits; the rest are the land nearest each area's center, within about 9 miles. Ahwatukee and San Tan Valley outlines are approximate. The interactive version with hover details is <code>map.html</code>.</figcaption></figure>
+<div class="wrap"><table id="t"></table></div>
+<h2>Compare areas by year</h2>
+<div class="card"><select id="metric"></select>
+<canvas id="yr"></canvas></div>
+<h2>Month-by-month profile</h2>
+<div class="card">Area A <select id="a1"></select> Area B <select id="a2"></select><canvas id="mo"></canvas></div>
+<h2>Notes</h2>
+<p class="mut">Airport-based temperatures (marked *) are daily extremes from the Iowa Environmental Mesonet; they match official records closely (within ~0.5F on average) but 110F+ day counts run roughly 10-15% low. Threshold-day counts are scaled up for missing days; years with under ~77% of days observed are excluded. Rain = average of the nearest FCDMC gauges (Chandler has 2, Gilbert 4, most others 4-6); calendar years. The volunteer (CoCoRaHS/co-op) gauges read 6-30% wetter than the county gauges in most areas, so treat rain as a range. Elevation matters as much as latitude here: higher areas (North Scottsdale, Carefree, Fountain Hills) run several degrees cooler.</p>
+<script>
+const D=/*DATA*/null;
+const cols=[["avg_high","Avg high °F"],["avg_low","Avg low °F"],["days_100","Days ≥100°F"],["days_110","Days ≥110°F"],["nights_90","Nights ≥90°F"],["freeze_days","Freeze days"],["rain_in","Rain in/yr"],["monsoon_in","Monsoon in"],["winter_in","Winter in"],["rain_days","Rain days"],["volunteer_rain_in","Rain in/yr (volunteer gauges)"]];
+let sortK="area",asc=true;
+const keyOf=(r,k)=>k==="area"?r.area.toLowerCase():(r[k]===""?(asc?1e9:-1e9):r[k]);
+function table(){const t=document.getElementById("t");
+const rows=[...D.summary].sort((x,y)=>{const a=keyOf(x,sortK),b=keyOf(y,sortK);return (a<b?-1:a>b?1:0)*(asc?1:-1)});
+t.innerHTML="<tr><th data-k='area'>Area"+(sortK==="area"?(asc?" ▲":" ▼"):"")+"</th>"+cols.map(c=>`<th data-k='${c[0]}'>${c[1]}${sortK===c[0]?(asc?" ▲":" ▼"):""}</th>`).join("")+"<th>Temp yrs</th></tr>"+
+rows.map(r=>`<tr><td title="${r.temp_note||""}"><span class="dot" style="background:${r.color}"></span>${r.area}${(r.temp_note||r.temp_years<10)?"<span class=px>*</span>":""}</td>`+cols.map(c=>`<td>${r[c[0]]===""?"–":Number(r[c[0]]).toFixed(1)}</td>`).join("")+`<td>${r.temp_years}</td></tr>`).join("");
+t.querySelectorAll("th").forEach(h=>h.onclick=()=>{const k=h.dataset.k;if(!k)return;asc=sortK==k?!asc:true;sortK=k;table()})}
+table();
+const areas=D.summary.map(r=>r.area),colOf=Object.fromEntries(D.summary.map(r=>[r.area,r.color]));
+const mset=document.getElementById("metric");cols.forEach(c=>mset.add(new Option(c[1],c[0])));mset.value="days_110";
+let c1,c2;function yr(){const k=mset.value,yrs=[...Array(10)].map((_,i)=>2016+i);c1&&c1.destroy();
+c1=new Chart("yr",{type:"line",data:{labels:yrs,datasets:areas.map((a,i)=>({label:a,borderColor:colOf[a],backgroundColor:colOf[a],tension:.2,pointRadius:2,
+data:yrs.map(y=>{const r=D.annual.find(r=>r.area==a&&r.year==y);return r&&r[k]!=null?r[k]:null})}))},options:{plugins:{legend:{position:"bottom"}}}})}
+mset.onchange=yr;yr();
+const s1=document.getElementById("a1"),s2=document.getElementById("a2");areas.forEach(a=>{s1.add(new Option(a,a));s2.add(new Option(a,a))});s1.value="Central Phoenix";s2.value="North Scottsdale";
+const mn="Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" ");
+function mo(){c2&&c2.destroy();const ds=[];[[s1.value,colOf[s1.value]],[s2.value,colOf[s2.value]]].forEach(([a,col],i)=>{const r=D.monthly.filter(x=>x.area==a);
+ds.push({label:a+" high",borderColor:col,data:r.map(x=>x.avg_high),yAxisID:"y"},{label:a+" low",borderColor:col,borderDash:[5,4],data:r.map(x=>x.avg_low),yAxisID:"y"},{type:"bar",label:a+" rain (in)",backgroundColor:col+"66",data:r.map(x=>x.rain_in),yAxisID:"y1"})});
+c2=new Chart("mo",{type:"line",data:{labels:mn,datasets:ds},options:{scales:{y:{title:{display:true,text:"°F"}},y1:{position:"right",grid:{drawOnChartArea:false},title:{display:true,text:"rain in"}}},plugins:{legend:{position:"bottom"}}}})}
+s1.onchange=s2.onchange=mo;mo();
+</script></body></html>

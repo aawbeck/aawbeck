@@ -1,0 +1,21 @@
+area,temp_years,avg_high,avg_low,days_100,days_110,nights_90,freeze_days,rain_years,rain_in,monsoon_in,winter_in,rain_days,temp_note
+Ahwatukee,10,87.8,63.4,109.4,24.8,7.6,0.2,2,4.0,1.2,2.8,18.5,Average of Sky Harbor and Chandler Municipal airports; foothills may run a bit cooler at night
+Anthem/New River,10,85.3,60.9,92.5,14.5,2.0,1.6,7,9.1,3.4,5.8,36.3,"Deer Valley Airport (~12 mi, similar elevation); same source as North Phoenix"
+Apache Junction,10,86.9,58.3,106.7,18.1,0.3,6.0,10,10.7,4.1,6.6,40.4,
+Avondale/Litchfield Park,10,86.9,63.0,106.8,16.5,4.5,2.2,10,7.3,2.7,4.7,30.2,Phoenix Goodyear Airport (~5 mi); same source as Goodyear
+Buckeye,10,86.4,58.8,102.7,16.5,0.4,8.5,0,,,,,Buckeye Municipal Airport
+Carefree/Cave Creek,10,85.5,59.0,96.2,13.2,0.0,7.0,10,11.2,3.8,7.4,32.8,
+Central Phoenix,10,88.7,65.1,119.8,36.5,18.8,0.1,10,7.7,3.0,4.7,32.2,
+Chandler,10,86.9,61.7,106.3,14.0,3.8,2.2,9,7.0,2.6,4.4,27.1,Chandler Municipal Airport
+Fountain Hills,8,84.8,60.8,93.1,10.5,0.9,2.1,5,7.4,2.1,5.3,33.4,
+Gilbert,10,86.4,60.7,97.2,13.9,1.7,2.9,6,6.9,2.1,4.8,30.7,Average of Chandler Municipal and Williams Gateway airports (Gilbert sits between them)
+Goodyear,10,86.9,63.0,106.8,16.5,4.5,2.2,9,6.8,2.1,4.8,29.6,Phoenix Goodyear Airport; same source as Avondale/Litchfield Park
+Mesa (East),10,88.2,59.0,114.3,27.1,1.0,7.3,10,9.7,3.7,6.0,37.1,
+North Phoenix,10,85.3,60.9,92.5,14.5,2.0,1.6,10,8.0,2.8,5.2,31.2,
+North Scottsdale,9,83.1,60.2,64.3,2.3,0.4,3.8,10,11.5,3.6,7.9,39.2,
+Queen Creek,10,85.9,59.7,96.9,9.8,0.8,5.0,0,,,,,Williams Gateway Airport (~4 mi); same source as San Tan Valley
+San Tan Valley,10,85.9,59.7,96.9,9.8,0.8,5.0,5,8.9,3.9,5.0,33.2,Williams Gateway Airport (~8 mi); same source as Queen Creek
+Scottsdale,10,86.4,62.4,100.9,17.8,7.1,1.5,10,8.0,3.0,5.0,35.5,
+Surprise/Sun City,10,87.1,60.1,111.3,33.5,2.7,5.6,10,8.0,2.8,5.1,32.0,Youngtown station (Sun City area)
+Tempe,5,89.1,56.6,112.9,19.4,0.0,8.0,10,7.3,2.6,4.7,31.8,
+West Valley (Glendale/Peoria),10,86.9,63.6,106.5,17.5,11.5,1.5,10,7.6,2.8,4.9,27.9,Glendale Municipal Airport
