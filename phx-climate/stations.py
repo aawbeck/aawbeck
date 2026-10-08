@@ -7,7 +7,8 @@ AREAS = {
  "North Scottsdale": ("USC00026603", ["USC00026603","US1AZMR0045","US1AZMR0232","US1AZMR0265"]),
  "Tempe":            ("USC00028499", ["USC00028499","US1AZMR0267","US1AZMR0347","US1AZMR0032"]),
  "Mesa (East)":      ("USC00022782", ["USC00022782","US1AZMR0153","US1AZMR0213","US1AZMR0373"]),
- "Gilbert/Chandler": ("USC00022782", ["US1AZMR0280","US1AZMR0392","US1AZMR0197","US1AZMR0278"]),
+ "Gilbert": ("IWA_AP", ["US1AZMR0280","US1AZMR0392","US1AZMR0339","US1AZMR0338"]),
+ "Chandler": ("CHD_AP", ["US1AZMR0197","US1AZMR0278","US1AZMR0290","US1AZMR0458","US1AZMR0157"]),
  "Fountain Hills":   ("USC00023190", ["USC00023190","US1AZMR0022","US1AZMR0319"]),
  "Carefree/Cave Creek": ("USC00021282", ["USC00021282","US1AZMR0017","US1AZMR0163"]),
  "West Valley (Glendale/Peoria)": ("USC00029634", ["US1AZMR0046","US1AZMR0226","US1AZMR0379","USC00029634"]),
@@ -16,11 +17,11 @@ AREAS = {
  "Apache Junction":  ("USC00020288", ["USC00020288","US1AZPN0020","US1AZPN0035"]),
 }
 
-# Areas whose temperature comes from a nearby (not in-area) station -> shown as "proxy" in outputs.
+# Notes shown in outputs where the temperature source is not an in-area, full-record station.
 TEMP_PROXY = {
- "Gilbert/Chandler": "East Mesa station (no long-record Gilbert/Chandler station)",
+ "Gilbert": "Williams Gateway Airport (SE Gilbert/Mesa border), from hourly obs: 110F+ day counts run ~1/3 low",
+ "Chandler": "Chandler Municipal Airport, from hourly obs: lows run ~1F warm, 110F+ day counts run low",
  "West Valley (Glendale/Peoria)": "Youngtown station (Sun City area)",
  "Goodyear/Litchfield": "Litchfield Park station; record ends 2021",
  "Surprise/Sun City": "Youngtown station",
- "North Phoenix": None, "Mesa (East)": None,
 }

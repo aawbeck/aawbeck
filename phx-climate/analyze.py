@@ -1,6 +1,9 @@
 import pandas as pd, numpy as np
 from stations import AREAS, TEMP_PROXY
 d = pd.read_csv("data/noaa_daily.csv", parse_dates=["DATE"])
+ap = pd.read_csv("data/airport_daily.csv", parse_dates=["DATE"])[["STATION","DATE","TMAX","TMIN"]]
+ap["PRCP"] = np.nan
+d = pd.concat([d, ap], ignore_index=True)
 d["Y"], d["M"] = d.DATE.dt.year, d.DATE.dt.month
 MIN_DAYS = 330  # station-year needs this many observed days to count
 
