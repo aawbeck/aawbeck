@@ -12,7 +12,7 @@ th:first-child,td:first-child{text-align:left}th{cursor:pointer;position:sticky;
 select{font:inherit;padding:4px}canvas{max-height:320px}.px{color:var(--mut)}
 </style></head><body>
 <h1>Phoenix Metro climate, 2016-2025</h1>
-<p class="mut">NOAA GHCN-Daily: NWS/co-op temperature stations and CoCoRaHS + co-op rain gauges, averaged per area. Click a column to sort. <span class="px">*</span> = temperature from a nearby proxy station or fewer than 10 usable years (see notes).</p>
+<p class="mut">Temperatures: NOAA stations. Rain: Flood Control District of Maricopa County automated gauges (4-6 nearest to each area, averaged); NOAA volunteer-gauge rain shown for comparison. Click a column to sort. <span class="px">*</span> = temperature from a nearby proxy station or fewer than 10 usable years (see notes).</p>
 <div class="wrap"><table id="t"></table></div>
 <h2>Compare areas by year</h2>
 <div class="card"><select id="metric"></select>
@@ -20,10 +20,10 @@ select{font:inherit;padding:4px}canvas{max-height:320px}.px{color:var(--mut)}
 <h2>Month-by-month profile</h2>
 <div class="card">Area A <select id="a1"></select> Area B <select id="a2"></select><canvas id="mo"></canvas></div>
 <h2>Notes</h2>
-<p class="mut">Threshold-day counts are scaled up for missing days; years with under ~77% of days observed are excluded. Rain = average over qualifying gauges (330+ reporting days/year). Maricopa County Flood Control gauge data not yet included. Elevation matters as much as latitude here: higher areas (North Scottsdale, Carefree, Fountain Hills) run several degrees cooler.</p>
+<p class="mut">Threshold-day counts are scaled up for missing days; years with under ~77% of days observed are excluded. Rain = average of the nearest FCDMC gauges (Chandler has 2, Gilbert 4, most others 4-6); calendar years. The volunteer (CoCoRaHS/co-op) gauges read 6-30% wetter than the county gauges in most areas, so treat rain as a range. Elevation matters as much as latitude here: higher areas (North Scottsdale, Carefree, Fountain Hills) run several degrees cooler.</p>
 <script>
 const D=/*DATA*/null;
-const cols=[["avg_high","Avg high °F"],["avg_low","Avg low °F"],["days_100","Days ≥100°F"],["days_110","Days ≥110°F"],["nights_90","Nights ≥90°F"],["freeze_days","Freeze days"],["rain_in","Rain in/yr"],["monsoon_in","Monsoon in"],["winter_in","Winter in"],["rain_days","Rain days"]];
+const cols=[["avg_high","Avg high °F"],["avg_low","Avg low °F"],["days_100","Days ≥100°F"],["days_110","Days ≥110°F"],["nights_90","Nights ≥90°F"],["freeze_days","Freeze days"],["rain_in","Rain in/yr"],["monsoon_in","Monsoon in"],["winter_in","Winter in"],["rain_days","Rain days"],["volunteer_rain_in","Rain in/yr (volunteer gauges)"]];
 let sortK="avg_high",asc=true;
 function table(){const t=document.getElementById("t");const rows=[...D.summary].sort((x,y)=>((x[sortK]===""?1e9:x[sortK])-(y[sortK]===""?1e9:y[sortK]))*(asc?1:-1));
 t.innerHTML="<tr><th data-k='area'>Area</th>"+cols.map(c=>`<th data-k='${c[0]}'>${c[1]}</th>`).join("")+"<th>Temp yrs</th></tr>"+
