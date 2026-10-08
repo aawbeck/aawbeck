@@ -12,7 +12,7 @@ th:first-child,td:first-child{text-align:left}th{cursor:pointer;position:sticky;
 select{font:inherit;padding:4px}canvas{max-height:320px}.px{color:var(--mut)}
 </style></head><body>
 <h1>Phoenix Metro climate, 2016-2025</h1>
-<p class="mut">Temperatures: NOAA stations. Rain: Flood Control District of Maricopa County automated gauges (4-6 nearest to each area, averaged); NOAA volunteer-gauge rain shown for comparison. Click a column to sort. <span class="px">*</span> = temperature from a nearby proxy station or fewer than 10 usable years (see notes).</p>
+<p class="mut">Temperatures: NOAA stations. Rain: Flood Control District of Maricopa County automated gauges (4-6 nearest to each area, averaged); NOAA volunteer-gauge rain shown for comparison. Alphabetical by default; click any column header to sort by it. <span class="px">*</span> = temperature from a nearby proxy station or fewer than 10 usable years (see notes).</p>
 <figure><img alt="Map of the Phoenix Valley with each report area shaded in its color, with freeways" src="data:image/png;base64,/*MAPIMG*/">
 <figcaption>Which part of the Valley each area below represents (same colors as the swatches and charts). Single-city areas follow city limits; the rest are the land nearest each area's center, within about 9 miles. Ahwatukee and San Tan Valley outlines are approximate. The interactive version with hover details is <code>map.html</code>.</figcaption></figure>
 <div class="wrap"><table id="t"></table></div>
@@ -26,11 +26,13 @@ select{font:inherit;padding:4px}canvas{max-height:320px}.px{color:var(--mut)}
 <script>
 const D=/*DATA*/null;
 const cols=[["avg_high","Avg high °F"],["avg_low","Avg low °F"],["days_100","Days ≥100°F"],["days_110","Days ≥110°F"],["nights_90","Nights ≥90°F"],["freeze_days","Freeze days"],["rain_in","Rain in/yr"],["monsoon_in","Monsoon in"],["winter_in","Winter in"],["rain_days","Rain days"],["volunteer_rain_in","Rain in/yr (volunteer gauges)"]];
-let sortK="avg_high",asc=true;
-function table(){const t=document.getElementById("t");const rows=[...D.summary].sort((x,y)=>((x[sortK]===""?1e9:x[sortK])-(y[sortK]===""?1e9:y[sortK]))*(asc?1:-1));
-t.innerHTML="<tr><th data-k='area'>Area</th>"+cols.map(c=>`<th data-k='${c[0]}'>${c[1]}</th>`).join("")+"<th>Temp yrs</th></tr>"+
+let sortK="area",asc=true;
+const keyOf=(r,k)=>k==="area"?r.area.toLowerCase():(r[k]===""?(asc?1e9:-1e9):r[k]);
+function table(){const t=document.getElementById("t");
+const rows=[...D.summary].sort((x,y)=>{const a=keyOf(x,sortK),b=keyOf(y,sortK);return (a<b?-1:a>b?1:0)*(asc?1:-1)});
+t.innerHTML="<tr><th data-k='area'>Area"+(sortK==="area"?(asc?" ▲":" ▼"):"")+"</th>"+cols.map(c=>`<th data-k='${c[0]}'>${c[1]}${sortK===c[0]?(asc?" ▲":" ▼"):""}</th>`).join("")+"<th>Temp yrs</th></tr>"+
 rows.map(r=>`<tr><td title="${r.temp_note||""}"><span class="dot" style="background:${r.color}"></span>${r.area}${(r.temp_note||r.temp_years<10)?"<span class=px>*</span>":""}</td>`+cols.map(c=>`<td>${r[c[0]]===""?"–":Number(r[c[0]]).toFixed(1)}</td>`).join("")+`<td>${r.temp_years}</td></tr>`).join("");
-t.querySelectorAll("th").forEach(h=>h.onclick=()=>{const k=h.dataset.k;if(!cols.some(c=>c[0]==k))return;asc=sortK==k?!asc:true;sortK=k;table()})}
+t.querySelectorAll("th").forEach(h=>h.onclick=()=>{const k=h.dataset.k;if(!k)return;asc=sortK==k?!asc:true;sortK=k;table()})}
 table();
 const areas=D.summary.map(r=>r.area),colOf=Object.fromEntries(D.summary.map(r=>[r.area,r.color]));
 const mset=document.getElementById("metric");cols.forEach(c=>mset.add(new Option(c[1],c[0])));mset.value="days_110";
